@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Life - Beautiful Memories 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff0f6 0%, #ffe6f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #d65b9c;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(214, 91, 156, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214, 91, 156, 0.4); }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3em;
+            color: #d65b9c;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(214, 91, 156, 0.2);
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        .message-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(214, 91, 156, 0.15);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+        .message-card:nth-child(1) { animation-delay: 0.2s; }
+        .emoji-header { font-size: 3em; text-align: center; margin-bottom: 20px; }
+        .message-card h2 {
+            color: #d65b9c;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .message-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        
+        /* Polaroid Love Wall */
+        .polaroid-wall-section {
+            padding: 48px 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,240,246,0.9));
+            border-radius: 30px;
+            margin-top: 40px;
+        }
+        .polaroid-wall {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(150px, 1fr));
+            gap: 22px;
+            max-width: 600px;
+            margin: 0 auto;
+            justify-items: center;
+        }
+        @media (min-width: 768px) {
+            .polaroid-wall { grid-template-columns: repeat(3, 200px); }
+        }
+        .polaroid-card {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 14px;
+            padding: 14px 14px 28px 14px;
+            width: 190px;
+            height: 230px;
+            box-shadow: 0 14px 32px rgba(0,0,0,0.14), 0 1px 0 rgba(255,255,255,0.6);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .polaroid-card::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+        .polaroid-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+        }
+        .polaroid-caption {
+            position: absolute;
+            left: 50%;
+            bottom: 6px;
+            transform: translateX(-50%);
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.2em;
+            color: #c45a8f;
+            opacity: 0.9;
+            letter-spacing: 0.6px;
+        }
+        .polaroid-card:nth-child(1) { transform: rotate(-7deg) translateX(-10px) translateY(8px); }
+        .polaroid-card:nth-child(2) { transform: rotate(6deg) translateX(14px) translateY(-6px); }
+        .polaroid-card:nth-child(3) { transform: rotate(-4deg) translateX(-12px) translateY(10px); }
+        .polaroid-card:nth-child(4) { transform: rotate(7deg) translateX(12px) translateY(-8px); }
+        .polaroid-card:nth-child(5) { transform: rotate(-6deg) translateX(-14px) translateY(6px); }
+        .polaroid-card:nth-child(6) { transform: rotate(5deg) translateX(10px) translateY(-10px); }
+        .polaroid-card:hover {
+            transform: rotate(0deg) translateY(-8px);
+            box-shadow: 0 22px 60px rgba(214,91,156,0.26), 0 1px 0 rgba(255,255,255,0.7);
+        }
+        
+        /* Video Section */
+        .video-section {
+            margin: 60px 0;
+            padding: 20px;
+        }
+        .video-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+            color: #d65b9c;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(214, 91, 156, 0.2);
+        }
+        .video-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(214, 91, 156, 0.3);
+            background: linear-gradient(135deg, #ffc0e0, #ffb6d9);
+            animation: videoEntrance 1s ease-out;
+        }
+        @keyframes videoEntrance {
+            0% { opacity: 0; transform: scale(0.8) rotateY(-15deg); }
+            60% { transform: scale(1.05) rotateY(5deg); }
+            100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+        }
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 192, 224, 0.85), rgba(255, 182, 217, 0.85));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            z-index: 2;
+        }
+        .video-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .play-button {
+            text-align: center;
+            animation: floatBounce 2s ease-in-out infinite;
+        }
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .play-icon {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+        .play-button:hover .play-icon {
+            transform: scale(1.2);
+        }
+        .play-text {
+            font-size: 1.4em;
+            color: white;
+            font-weight: 600;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            font-family: 'Great Vibes', cursive;
+        }
+        .video-wrapper::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            animation: sparkleRotate 3s linear infinite;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .video-wrapper::after {
+            content: '💖';
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 2em;
+            animation: heartBeat 1.5s ease-in-out infinite;
+            z-index: 3;
+            pointer-events: none;
+        }
+        @keyframes sparkleRotate {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.8; }
+            50% { transform: rotate(180deg) scale(1.2); opacity: 1; }
+        }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25%, 75% { transform: scale(1.2); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(214, 91, 156, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 3px solid #d65b9c;
+        }
+        .music-player:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 40px rgba(214, 91, 156, 0.6);
+        }
+        .music-player.playing {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .music-icon {
+            font-size: 1.6em;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <a href="one.html" class="back-btn">← Back</a>
+    <div class="container">
+        <h1>College Life 🎓</h1>
+        <div class="content-grid">
+            <div class="message-card">
+                <div class="emoji-header">🤍</div>
+                <h2>Friends Forever</h2>
+                <p>College brought us together, and these friendships will last a lifetime. From late-night study sessions to spontaneous adventures, from shared laughter to heartfelt talks - you all have made every moment unforgettable. Here's to the bonds we've built and the memories we'll cherish forever!</p>
+            </div>
+        </div>
+
+        <!-- Polaroid Love Wall -->
+        <section class="polaroid-wall-section">
+            <div class="polaroid-wall">
+                <figure class="polaroid-card">
+                    <img class="polaroid-photo" src="100.jpg" alt="squad">
+                    <figcaption class="polaroid-caption">squad</figcaption>
+                </figure>
+                <figure class="polaroid-card">
+                    <img class="polaroid-photo" src="vibe.jpg" alt="vibes">
+                    <figcaption class="polaroid-caption">vibes</figcaption>
+                </figure>
+                <figure class="polaroid-card">
+                    <img class="polaroid-photo" src="105.jpg" alt="fest">
+                    <figcaption class="polaroid-caption">fest</figcaption>
+                </figure>
+                <figure class="polaroid-card">
+                    <img class="polaroid-photo" src="108.jpg" alt="together">
+                    <figcaption class="polaroid-caption">together</figcaption>
+                </figure>
+                <figure class="polaroid-card">
+                    <img class="polaroid-photo" src="46.jpg" alt="crazy">
+                    <figcaption class="polaroid-caption">crazy</figcaption>
+                </figure>
+                <figure class="polaroid-card">
+                    <img class="polaroid-photo" src="for.jpg" alt="forever">
+                    <figcaption class="polaroid-caption">forever</figcaption>
+                </figure>
+            </div>
+        </section>
+        <h2 class="video-title">More Memories 🎉</h2>
+        
+        <!-- Video Section 1 -->
+        <section class="video-section">
+            
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <video class="college-video-1" controls playsinline>
+                        <source src="vi.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay" id="videoOverlay1">
+                        <div class="play-button" id="playButton1">
+                            <span class="play-icon">▶️</span>
+                            <p class="play-text">Watch Our Journey 💝</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <h2 class="video-title">That Type Of Day 🎉</h2>
+        <!-- Video Section 2 -->
+        <section class="video-section">
+            
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <video class="college-video-2" controls playsinline>
+                        <source src="ni.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay" id="videoOverlay2">
+                        <div class="play-button" id="playButton2">
+                            <span class="play-icon">▶️</span>
+                            <p class="play-text">Relive the Fun 🌟</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      
+    </div>
+    
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer" title="Toggle Music">
+        <div class="music-icon">🎵</div>
+    </div>
+
+    <!-- Hidden audio element for background music -->
+    <audio id="backgroundMusic" loop muted>
+        <source src="Oorum_Blood_Dude_Pradeep_Ranganathan_Mamitha_SaiAbhyankkar_Keerthiswaran_Paal_Dabba_Mythri_48kbps.mp4" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Background Music functionality
+        const musicPlayer = document.getElementById('musicPlayer');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        backgroundMusic.volume = 0.45;
+        let isPlaying = false;
+
+        function attemptBgPlay(){
+            backgroundMusic.muted = false;
+            backgroundMusic.play().then(() => {
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            }).catch(() => {});
+        }
+
+        // Try to autoplay immediately
+        attemptBgPlay();
+        
+        // Attempt on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', attemptBgPlay);
+        
+        // Attempt on window load
+        window.addEventListener('load', attemptBgPlay);
+
+        // Auto-play on first user interaction (fallback)
+        const playOnInteraction = () => {
+            if (!isPlaying) {
+                attemptBgPlay();
+            }
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('touchstart', playOnInteraction);
+            document.removeEventListener('scroll', playOnInteraction);
+        };
+
+        document.addEventListener('click', playOnInteraction);
+        document.addEventListener('touchstart', playOnInteraction);
+        document.addEventListener('scroll', playOnInteraction, { once: true });
+
+        musicPlayer.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isPlaying) {
+                backgroundMusic.pause();
+                musicPlayer.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                attemptBgPlay();
+                musicPlayer.classList.add('playing');
+                isPlaying = true;
+            }
+        });
+
+        // Video player functionality for Video 1
+        const videoOverlay1 = document.getElementById('videoOverlay1');
+        const playButton1 = document.getElementById('playButton1');
+        const video1 = document.querySelector('.college-video-1');
+
+        if (videoOverlay1 && playButton1 && video1) {
+            playButton1.addEventListener('click', function() {
+                videoOverlay1.classList.add('hidden');
+                video1.play();
+            });
+
+            video1.addEventListener('click', function() {
+                if (video1.paused) {
+                    video1.play();
+                } else {
+                    video1.pause();
+                }
+            });
+
+            video1.addEventListener('ended', function() {
+                videoOverlay1.classList.remove('hidden');
+                backgroundMusic.play().catch(() => {});
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            });
+
+            video1.addEventListener('play', function() {
+                videoOverlay1.classList.add('hidden');
+                if (!backgroundMusic.paused) {
+                    backgroundMusic.pause();
+                    isPlaying = false;
+                    musicPlayer.classList.remove('playing');
+                }
+            });
+
+            video1.addEventListener('pause', function() {
+                backgroundMusic.play().catch(() => {});
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            });
+        }
+
+        // Video player functionality for Video 2
+        const videoOverlay2 = document.getElementById('videoOverlay2');
+        const playButton2 = document.getElementById('playButton2');
+        const video2 = document.querySelector('.college-video-2');
+
+        if (videoOverlay2 && playButton2 && video2) {
+            playButton2.addEventListener('click', function() {
+                videoOverlay2.classList.add('hidden');
+                video2.play();
+            });
+
+            video2.addEventListener('click', function() {
+                if (video2.paused) {
+                    video2.play();
+                } else {
+                    video2.pause();
+                }
+            });
+
+            video2.addEventListener('ended', function() {
+                videoOverlay2.classList.remove('hidden');
+                backgroundMusic.play().catch(() => {});
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            });
+
+            video2.addEventListener('play', function() {
+                videoOverlay2.classList.add('hidden');
+                if (!backgroundMusic.paused) {
+                    backgroundMusic.pause();
+                    isPlaying = false;
+                    musicPlayer.classList.remove('playing');
+                }
+            });
+
+            video2.addEventListener('pause', function() {
+                backgroundMusic.play().catch(() => {});
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            });
+        }
+
+        // Video player functionality for Video 3
+        const videoOverlay3 = document.getElementById('videoOverlay3');
+        const playButton3 = document.getElementById('playButton3');
+        const video3 = document.querySelector('.college-video-3');
+
+        if (videoOverlay3 && playButton3 && video3) {
+            playButton3.addEventListener('click', function() {
+                videoOverlay3.classList.add('hidden');
+                video3.play();
+            });
+
+            video3.addEventListener('click', function() {
+                if (video3.paused) {
+                    video3.play();
+                } else {
+                    video3.pause();
+                }
+            });
+
+            video3.addEventListener('ended', function() {
+                videoOverlay3.classList.remove('hidden');
+                backgroundMusic.play().catch(() => {});
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            });
+
+            video3.addEventListener('play', function() {
+                videoOverlay3.classList.add('hidden');
+                if (!backgroundMusic.paused) {
+                    backgroundMusic.pause();
+                    isPlaying = false;
+                    musicPlayer.classList.remove('playing');
+                }
+            });
+
+            video3.addEventListener('pause', function() {
+                backgroundMusic.play().catch(() => {});
+                isPlaying = true;
+                musicPlayer.classList.add('playing');
+            });
+        }
+    </script>
+</body>
+</html>
